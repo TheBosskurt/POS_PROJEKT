@@ -1,0 +1,62 @@
+@startuml
+class Auto {
+  -modell: String
+  -farbe: String
+  -kennzeichen: String
+  +start()
+  +fahren()
+  +stop()
+}
+
+class Motor {
+  -leistung: int
+  -hubraum: int
+  +start()
+  +stop()
+}
+
+class AutoGalerie {
+  -name: String
+  -adresse: String
+  -telefon: String
+  -autos: List<Auto>
+  +hinzufuegenAuto(Auto auto)
+  +entfernenAuto(Auto auto)
+  +verkaufenAuto(Auto auto, Kunden kunde)
+  +zuruecknehmenAuto(Auto auto, Kunden kunde)
+  +getVerfuegbareAutos(): List<Auto>
+}
+
+class Kunden {
+  -name: String
+  -adresse: String
+  -telefon: String
+  +kaufenAuto(Auto auto)
+  +verkaufenAuto(Auto auto)
+}
+
+class Werkstatt {
+  +reparierenAuto(Auto auto)
+}
+
+class Mitarbeiter {
+  -name: String
+  -position: String
+  +arbeitenAnAuto(Auto auto)
+}
+
+class Rechnung {
+  -rechnungsnummer: int
+  -betrag: float
+  +drucken()
+}
+
+Auto -- Motor : hat
+AutoGalerie "1" -- "*..*" Auto : besitzt
+AutoGalerie -- Kunden : verkauft an
+AutoGalerie -- Mitarbeiter : hat Mitarbeiter
+AutoGalerie "1" -- "0..*" Rechnung : erstellt
+Auto "0..1" -- "0..1" Werkstatt : repariert
+AutoGalerie "1" -- "1..*" Rechnung : stellt aus
+
+@enduml
